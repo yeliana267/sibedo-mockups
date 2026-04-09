@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIBEDO - Página no encontrada</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <style>
+      body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      main {
+        flex: 1;
+        display: flex;
+        align-items: center;
+      }
+
+      /* ── LAYOUT ── */
+      .error-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-16);
+        align-items: center;
+        padding: var(--space-20) 0;
+        width: 100%;
+      }
+
+      /* ── TEXTO ── */
+      .error-eyebrow {
+        display: inline-block;
+        font-size: var(--fs-xs);
+        font-weight: var(--fw-semibold);
+        color: var(--color-primary-dark);
+        background-color: var(--color-primary-light);
+        border-radius: var(--radius-full);
+        padding: var(--space-1) var(--space-4);
+        margin-bottom: var(--space-5);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .error-title {
+        font-family: var(--font-heading);
+        font-size: var(--fs-4xl);
+        font-weight: var(--fw-bold);
+        color: var(--color-text);
+        line-height: 1.15;
+        margin-bottom: var(--space-4);
+      }
+      .error-title span {
+        color: var(--color-primary);
+      }
+      .error-desc {
+        font-size: var(--fs-lg);
+        color: var(--color-text-soft);
+        line-height: 1.65;
+        margin-bottom: var(--space-6);
+      }
+      .error-actions {
+        display: flex;
+        gap: var(--space-3);
+        flex-wrap: wrap;
+        margin-bottom: var(--space-8);
+      }
+
+      /* Búsqueda rápida */
+      .quick-search {
+        display: flex;
+        gap: var(--space-2);
+        margin-bottom: var(--space-8);
+      }
+      .quick-search input {
+        flex: 1;
+        padding: var(--space-3) var(--space-4);
+        border: 1.5px solid var(--color-border);
+        border-radius: var(--radius-md);
+        font-family: var(--font-body);
+        font-size: var(--fs-sm);
+        color: var(--color-text);
+        outline: none;
+        transition: border-color var(--transition-fast);
+      }
+      .quick-search input:focus { border-color: var(--color-primary); }
+      .quick-search input::placeholder { color: var(--color-text-muted); }
+      .quick-search button {
+        padding: var(--space-3) var(--space-4);
+        background-color: var(--color-primary);
+        color: white;
+        border: none;
+        border-radius: var(--radius-md);
+        font-family: var(--font-body);
+        font-size: var(--fs-sm);
+        font-weight: var(--fw-semibold);
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background-color var(--transition-fast);
+      }
+      .quick-search button:hover { background-color: var(--color-primary-dark); }
+
+      /* Sugerencias */
+      .sugerencias-titulo {
+        font-size: var(--fs-xs);
+        font-weight: var(--fw-semibold);
+        color: var(--color-text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: var(--space-3);
+      }
+      .sugerencias-links {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+      .sugerencia-link {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        font-size: var(--fs-sm);
+        font-weight: var(--fw-medium);
+        color: var(--color-primary);
+        text-decoration: none;
+        transition: gap var(--transition-fast);
+      }
+      .sugerencia-link:hover {
+        gap: var(--space-3);
+        color: var(--color-primary-dark);
+      }
+
+      /* ── ILUSTRACIÓN ── */
+      .error-illustration {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .illustration-wrap {
+        position: relative;
+        width: 320px;
+        height: 320px;
+      }
+      .bg-circle {
+        position: absolute;
+        inset: 0;
+        border-radius: var(--radius-full);
+        background-color: var(--color-primary-light);
+      }
+      .big-404 {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-heading);
+        font-size: 7rem;
+        font-weight: var(--fw-bold);
+        color: var(--color-primary);
+        opacity: 0.1;
+        user-select: none;
+        letter-spacing: -0.05em;
+      }
+      .icon-center {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: var(--space-4);
+      }
+      .icon-emoji {
+        font-size: 5rem;
+        animation: float 3s ease-in-out infinite;
+      }
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50%       { transform: translateY(-12px); }
+      }
+      .icon-caption {
+        font-family: var(--font-heading);
+        font-size: var(--fs-sm);
+        font-weight: var(--fw-semibold);
+        color: var(--color-primary);
+        background-color: white;
+        padding: var(--space-2) var(--space-4);
+        border-radius: var(--radius-full);
+        box-shadow: var(--shadow-md);
+      }
+
+      /* Elementos flotantes decorativos */
+      .deco {
+        position: absolute;
+        border-radius: var(--radius-full);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        animation: float 3s ease-in-out infinite;
+      }
+      .deco-1 {
+        width: 48px; height: 48px;
+        background-color: var(--color-accent-light);
+        top: 20px; right: 30px;
+        animation-delay: 0.5s;
+      }
+      .deco-2 {
+        width: 40px; height: 40px;
+        background-color: var(--color-success-light);
+        bottom: 30px; left: 20px;
+        animation-delay: 1s;
+      }
+      .deco-3 {
+        width: 36px; height: 36px;
+        background-color: var(--color-error-light);
+        top: 60px; left: 10px;
+        animation-delay: 1.5s;
+      }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 720px) {
+        .error-layout {
+          grid-template-columns: 1fr;
+          text-align: center;
+          padding: var(--space-12) 0;
+        }
+        .error-illustration { order: -1; }
+        .error-actions { justify-content: center; }
+        .quick-search { max-width: 400px; margin-left: auto; margin-right: auto; }
+        .sugerencias-links { align-items: center; }
+      }
+    </style>
+  </head>
+  <body>
+    <div data-include="partials/nav.html"></div>
+
+    <main>
+      <div class="container">
+        <div class="error-layout">
+
+          <!-- TEXTO -->
+          <div>
+            <span class="error-eyebrow">Error 404</span>
+            <h1 class="error-title">Esta página no<br><span>fue encontrada</span></h1>
+            <p class="error-desc">
+              Parece que la beca o sección que buscas no existe o fue movida.
+              Pero no te preocupes — hay cientos de oportunidades esperándote.
+            </p>
+
+            <div class="error-actions">
+              <a href="index.html" class="btn btn-primary">← Ir al inicio</a>
+              <a href="buscar.html" class="btn btn-secondary">Buscar becas</a>
+            </div>
+
+            <div class="quick-search">
+              <input type="search" id="qs404" placeholder="Busca una beca directamente..." />
+              <button onclick="irABuscar()">🔍 Buscar</button>
+            </div>
+
+            <div class="sugerencias-titulo">Páginas populares</div>
+            <div class="sugerencias-links">
+              <a href="buscar.html" class="sugerencia-link">🔍 Buscador de becas →</a>
+              <a href="guia.html" class="sugerencia-link">📋 Guía de aplicación paso a paso →</a>
+              <a href="testimonios.html" class="sugerencia-link">💬 Testimonios de becados →</a>
+              <a href="beca-detalle.html" class="sugerencia-link">🏆 Ver beca destacada del mes →</a>
+            </div>
+          </div>
+
+          <!-- ILUSTRACIÓN -->
+          <div class="error-illustration">
+            <div class="illustration-wrap">
+              <div class="bg-circle"></div>
+              <div class="big-404">404</div>
+              <div class="deco deco-1">🎓</div>
+              <div class="deco deco-2">🌍</div>
+              <div class="deco deco-3">📚</div>
+              <div class="icon-center">
+                <span class="icon-emoji">🔭</span>
+                <span class="icon-caption">¡Beca no encontrada!</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+    <div data-include="partials/footer.html"></div>
+    <script src="js/includes.js"></script>
+    <script>
+      function irABuscar() {
+        const q = document.getElementById('qs404').value.trim();
+        window.location.href = q
+          ? `buscar.html?q=${encodeURIComponent(q)}`
+          : 'buscar.html';
+      }
+      document.getElementById('qs404').addEventListener('keydown', e => {
+        if (e.key === 'Enter') irABuscar();
+      });
+    </script>
+  </body>
+</html>

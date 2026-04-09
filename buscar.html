@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIBEDO - Buscar Becas</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <style>
+      /* ── HERO ── */
+      .buscar-hero {
+        background-color: var(--color-primary);
+        padding: var(--space-16) 0 var(--space-12);
+      }
+      .buscar-hero h1 {
+        color: white;
+        margin-bottom: var(--space-3);
+      }
+      .buscar-hero p {
+        color: rgba(255,255,255,0.85);
+        font-size: var(--fs-lg);
+        margin-bottom: var(--space-6);
+      }
+
+      /* Barra búsqueda */
+      .search-bar-wrap {
+        display: flex;
+        gap: var(--space-3);
+        max-width: 680px;
+      }
+      .search-input-main {
+        flex: 1;
+        padding: var(--space-3) var(--space-5);
+        border-radius: var(--radius-md);
+        border: none;
+        font-family: var(--font-body);
+        font-size: var(--fs-base);
+        color: var(--color-text);
+        outline: none;
+        box-shadow: var(--shadow-md);
+      }
+      .search-input-main::placeholder { color: var(--color-text-muted); }
+      .btn-buscar {
+        padding: var(--space-3) var(--space-6);
+        background-color: var(--color-accent);
+        color: white;
+        border: none;
+        border-radius: var(--radius-md);
+        font-family: var(--font-body);
+        font-weight: var(--fw-semibold);
+        font-size: var(--fs-base);
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background-color var(--transition-fast);
+      }
+      .btn-buscar:hover { background-color: var(--color-accent-dark); }
+
+      /* Quick tags */
+      .quick-tags {
+        display: flex;
+        gap: var(--space-2);
+        flex-wrap: wrap;
+        margin-top: var(--space-4);
+        align-items: center;
+      }
+      .quick-tags-label {
+        font-size: var(--fs-xs);
+        color: rgba(255,255,255,0.6);
+      }
+      .quick-tag {
+        display: inline-block;
+        padding: var(--space-1) var(--space-3);
+        border-radius: var(--radius-full);
+        border: 1px solid rgba(255,255,255,0.3);
+        background-color: rgba(255,255,255,0.1);
+        color: rgba(255,255,255,0.9);
+        font-size: var(--fs-sm);
+        cursor: pointer;
+        transition: background-color var(--transition-fast);
+      }
+      .quick-tag:hover { background-color: rgba(255,255,255,0.2); }
+
+      /* ── LAYOUT ── */
+      .buscar-layout {
+        display: grid;
+        grid-template-columns: 272px 1fr;
+        gap: var(--space-8);
+        padding: var(--space-10) 0 var(--space-20);
+        align-items: start;
+      }
+
+      /* ── SIDEBAR ── */
+      .sidebar-filtros {
+        background-color: white;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        padding: var(--space-6);
+        position: sticky;
+        top: 88px;
+      }
+      .sidebar-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: var(--space-5);
+      }
+      .sidebar-header h3 {
+        font-family: var(--font-heading);
+        font-size: var(--fs-base);
+        font-weight: var(--fw-semibold);
+        color: var(--color-text);
+      }
+      .btn-limpiar {
+        font-size: var(--fs-xs);
+        font-weight: var(--fw-semibold);
+        color: var(--color-primary);
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: var(--font-body);
+        padding: 0;
+      }
+      .filtro-grupo {
+        margin-bottom: var(--space-5);
+      }
+      .filtro-grupo + .filtro-grupo {
+        border-top: 1px solid var(--color-border);
+        padding-top: var(--space-5);
+      }
+      .filtro-grupo-titulo {
+        font-size: var(--fs-sm);
+        font-weight: var(--fw-semibold);
+        color: var(--color-text);
+        margin-bottom: var(--space-3);
+      }
+      .filtro-check-item {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        margin-bottom: var(--space-2);
+        cursor: pointer;
+        font-size: var(--fs-sm);
+        color: var(--color-text);
+      }
+      .filtro-check-item input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        accent-color: var(--color-primary);
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+      .filtro-count {
+        margin-left: auto;
+        font-size: var(--fs-xs);
+        color: var(--color-text-muted);
+        background-color: var(--color-bg-muted);
+        border-radius: var(--radius-full);
+        padding: 0.1rem 0.45rem;
+      }
+      .filtro-select {
+        width: 100%;
+        padding: var(--space-2) var(--space-3);
+        border: 1.5px solid var(--color-border);
+        border-radius: var(--radius-md);
+        font-family: var(--font-body);
+        font-size: var(--fs-sm);
+        color: var(--color-text);
+        background-color: white;
+        cursor: pointer;
+        outline: none;
+        transition: border-color var(--transition-fast);
+      }
+      .filtro-select:focus { border-color: var(--color-primary); }
+
+      /* Range */
+      .range-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: var(--fs-xs);
+        color: var(--color-text-muted);
+        margin-top: var(--space-2);
+      }
+      input[type="range"] {
+        width: 100%;
+        accent-color: var(--color-primary);
+        margin-top: var(--space-2);
+      }
+
+      /* ── RESULTADOS ── */
+      .resultados-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: var(--space-4);
+        flex-wrap: wrap;
+        gap: var(--space-3);
+      }
+      .resultados-count {
+        font-size: var(--fs-sm);
+        color: var(--color-text-soft);
+      }
+      .resultados-count strong { color: var(--color-text); font-weight: var(--fw-semibold); }
+      .orden-select {
+        padding: var(--space-2) var(--space-3);
+        border: 1.5px solid var(--color-border);
+        border-radius: var(--radius-md);
+        font-family: var(--font-body);
+        font-size: var(--fs-sm);
+        color: var(--color-text);
+        background-color: white;
+        outline: none;
+        cursor: pointer;
+      }
+
+      /* Tags activos */
+      .filtros-activos {
+        display: flex;
+        gap: var(--space-2);
+        flex-wrap: wrap;
+        margin-bottom: var(--space-5);
+      }
+      .tag-activo {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-1);
+        padding: var(--space-1) var(--space-3);
+        border-radius: var(--radius-full);
+        background-color: var(--color-primary-light);
+        font-size: var(--fs-xs);
+        font-weight: var(--fw-semibold);
+        color: var(--color-primary-dark);
+      }
+      .tag-activo button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--color-primary-dark);
+        font-size: var(--fs-sm);
+        padding: 0;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+      }
+
+      /* ── CARD RESULTADO ── */
+      .lista-becas {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+      }
+      .card-beca-resultado {
+        background-color: white;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        padding: var(--space-5) var(--space-6);
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: var(--space-6);
+        align-items: start;
+        transition: all var(--transition-base);
+        text-decoration: none;
+        color: inherit;
+      }
+      .card-beca-resultado:hover {
+        border-color: var(--color-primary);
+        box-shadow: var(--shadow-md);
+        transform: translateY(-2px);
+        color: inherit;
+      }
+      .card-beca-resultado.urgente {
+        border-left: 4px solid var(--color-error);
+      }
+      .beca-nombre {
+        font-family: var(--font-heading);
+        font-size: var(--fs-xl);
+        font-weight: var(--fw-semibold);
+        color: var(--color-text);
+        margin-bottom: var(--space-1);
+      }
+      .beca-organismo {
+        font-size: var(--fs-sm);
+        color: var(--color-text-muted);
+        margin-bottom: var(--space-3);
+      }
+      .beca-meta-row {
+        display: flex;
+        gap: var(--space-4);
+        flex-wrap: wrap;
+        margin-bottom: var(--space-3);
+      }
+      .beca-meta-item {
+        display: flex;
+        align-items: center;
+        gap: var(--space-1);
+        font-size: var(--fs-sm);
+        color: var(--color-text-soft);
+      }
+      .beca-chips {
+        display: flex;
+        gap: var(--space-2);
+        flex-wrap: wrap;
+      }
+      .beca-chip {
+        font-size: var(--fs-xs);
+        font-weight: var(--fw-medium);
+        padding: var(--space-1) var(--space-3);
+        border-radius: var(--radius-full);
+        border: 1px solid var(--color-border);
+        color: var(--color-text-soft);
+        background-color: var(--color-bg-muted);
+      }
+      .beca-chip.area {
+        background-color: var(--color-primary-light);
+        border-color: #bfdbfe;
+        color: var(--color-primary-dark);
+      }
+      .beca-chip.pais {
+        background-color: var(--color-success-light);
+        border-color: #bbf7d0;
+        color: var(--color-success);
+      }
+      .beca-chip.nivel {
+        background-color: var(--color-accent-light);
+        border-color: #fde68a;
+        color: var(--color-accent-dark);
+      }
+
+      /* Panel derecho */
+      .card-beca-aside {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: var(--space-3);
+        min-width: 120px;
+      }
+      .beca-monto {
+        font-family: var(--font-heading);
+        font-size: var(--fs-2xl);
+        font-weight: var(--fw-bold);
+        color: var(--color-primary);
+        white-space: nowrap;
+      }
+      .beca-monto-label {
+        font-size: var(--fs-xs);
+        color: var(--color-text-muted);
+        margin-top: calc(var(--space-1) * -1);
+        text-align: right;
+      }
+      .deadline-badge {
+        font-size: var(--fs-xs);
+        font-weight: var(--fw-semibold);
+        padding: var(--space-1) var(--space-3);
+        border-radius: var(--radius-full);
+        white-space: nowrap;
+      }
+      .deadline-badge.urgente {
+        background-color: var(--color-error-light);
+        color: var(--color-error);
+      }
+      .deadline-badge.normal {
+        background-color: var(--color-success-light);
+        color: var(--color-success);
+      }
+      .deadline-badge.proximo {
+        background-color: var(--color-warning-light);
+        color: var(--color-accent-dark);
+      }
+
+      /* ── PAGINACIÓN ── */
+      .paginacion {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: var(--space-2);
+        margin-top: var(--space-8);
+      }
+      .pag-btn {
+        width: 38px;
+        height: 38px;
+        border-radius: var(--radius-md);
+        border: 1.5px solid var(--color-border);
+        background-color: white;
+        font-family: var(--font-body);
+        font-size: var(--fs-sm);
+        font-weight: var(--fw-medium);
+        color: var(--color-text);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all var(--transition-fast);
+      }
+      .pag-btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
+      .pag-btn.active {
+        background-color: var(--color-primary);
+        border-color: var(--color-primary);
+        color: white;
+      }
+      .pag-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+      .pag-sep { color: var(--color-text-muted); padding: 0 var(--space-1); }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 860px) {
+        .buscar-layout { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 600px) {
+        .card-beca-resultado { grid-template-columns: 1fr; }
+        .card-beca-aside { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
+      }
+    </style>
+  </head>
+  <body>
+    <div data-include="partials/nav.html"></div>
+
+    <main>
+      <!-- HERO -->
+      <section class="buscar-hero">
+        <div class="container">
+          <h1>Encuentra tu beca ideal</h1>
+          <p>Más de 200 becas disponibles para estudiantes dominicanos en todo el mundo.</p>
+          <div class="search-bar-wrap">
+            <input class="search-input-main" type="search" id="searchInput"
+              placeholder="Busca por nombre, área o universidad..." />
+            <button class="btn-buscar" onclick="buscar()">🔍 Buscar</button>
+          </div>
+          <div class="quick-tags">
+            <span class="quick-tags-label">Populares:</span>
+            <span class="quick-tag">Fulbright</span>
+            <span class="quick-tag">Erasmus+</span>
+            <span class="quick-tag">DAAD</span>
+            <span class="quick-tag">Ingeniería</span>
+            <span class="quick-tag">Becas completas</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- LAYOUT PRINCIPAL -->
+      <div class="container">
+        <div class="buscar-layout">
+
+          <!-- SIDEBAR -->
+          <aside class="sidebar-filtros">
+            <div class="sidebar-header">
+              <h3>Filtros</h3>
+              <button class="btn-limpiar" onclick="limpiarFiltros()">Limpiar todo</button>
+            </div>
+
+            <div class="filtro-grupo">
+              <div class="filtro-grupo-titulo">Área de estudio</div>
+              <label class="filtro-check-item"><input type="checkbox" checked /> Ingeniería <span class="filtro-count">48</span></label>
+              <label class="filtro-check-item"><input type="checkbox" /> Medicina y Salud <span class="filtro-count">31</span></label>
+              <label class="filtro-check-item"><input type="checkbox" /> Ciencias Sociales <span class="filtro-count">27</span></label>
+              <label class="filtro-check-item"><input type="checkbox" /> Arte y Diseño <span class="filtro-count">19</span></label>
+              <label class="filtro-check-item"><input type="checkbox" /> Derecho <span class="filtro-count">14</span></label>
+              <label class="filtro-check-item"><input type="checkbox" /> Educación <span class="filtro-count">22</span></label>
+            </div>
+
+            <div class="filtro-grupo">
+              <div class="filtro-grupo-titulo">País de destino</div>
+              <select class="filtro-select">
+                <option value="">Todos los países</option>
+                <option>🇺🇸 Estados Unidos</option>
+                <option>🇪🇸 España</option>
+                <option>🇨🇦 Canadá</option>
+                <option>🇲🇽 México</option>
+                <option>🇩🇪 Alemania</option>
+                <option>🇫🇷 Francia</option>
+                <option>🇧🇷 Brasil</option>
+                <option>🇦🇷 Argentina</option>
+              </select>
+            </div>
+
+            <div class="filtro-grupo">
+              <div class="filtro-grupo-titulo">Nivel académico</div>
+              <label class="filtro-check-item"><input type="checkbox" /> Pregrado <span class="filtro-count">56</span></label>
+              <label class="filtro-check-item"><input type="checkbox" checked /> Maestría <span class="filtro-count">89</span></label>
+              <label class="filtro-check-item"><input type="checkbox" /> Doctorado <span class="filtro-count">47</span></label>
+              <label class="filtro-check-item"><input type="checkbox" /> Postdoctorado <span class="filtro-count">12</span></label>
+            </div>
+
+            <div class="filtro-grupo">
+              <div class="filtro-grupo-titulo">Tipo de beca</div>
+              <label class="filtro-check-item"><input type="checkbox" checked /> Beca completa <span class="filtro-count">74</span></label>
+              <label class="filtro-check-item"><input type="checkbox" /> Parcial <span class="filtro-count">91</span></label>
+              <label class="filtro-check-item"><input type="checkbox" /> Intercambio <span class="filtro-count">38</span></label>
+            </div>
+
+            <div class="filtro-grupo">
+              <div class="filtro-grupo-titulo">Monto anual (USD)</div>
+              <input type="range" min="0" max="100000" value="60000" id="rangeSlider"
+                oninput="document.getElementById('rangeVal').textContent='$'+parseInt(this.value).toLocaleString()" />
+              <div class="range-labels">
+                <span>$0</span>
+                <span id="rangeVal">$60,000</span>
+                <span>$100K+</span>
+              </div>
+            </div>
+
+            <div class="filtro-grupo">
+              <div class="filtro-grupo-titulo">Cierre de convocatoria</div>
+              <label class="filtro-check-item"><input type="checkbox" /> Próximos 30 días <span class="filtro-count">18</span></label>
+              <label class="filtro-check-item"><input type="checkbox" /> Próximos 3 meses <span class="filtro-count">45</span></label>
+              <label class="filtro-check-item"><input type="checkbox" /> Convocatoria abierta <span class="filtro-count">112</span></label>
+            </div>
+
+            <button class="btn btn-primary" style="width:100%;">Aplicar filtros</button>
+          </aside>
+
+          <!-- RESULTADOS -->
+          <div>
+            <div class="resultados-header">
+              <div class="resultados-count">Mostrando <strong>6</strong> de <strong>148</strong> becas</div>
+              <select class="orden-select">
+                <option>Más relevantes</option>
+                <option>Mayor monto</option>
+                <option>Próximo cierre</option>
+                <option>Más recientes</option>
+              </select>
+            </div>
+
+            <div class="filtros-activos">
+              <span class="tag-activo">Ingeniería <button>✕</button></span>
+              <span class="tag-activo">Maestría <button>✕</button></span>
+              <span class="tag-activo">Beca completa <button>✕</button></span>
+            </div>
+
+            <div class="lista-becas">
+
+              <a href="beca-detalle.html" class="card-beca-resultado urgente">
+                <div>
+                  <div class="beca-nombre">Fulbright Dominican Republic Program</div>
+                  <div class="beca-organismo">U.S. Department of State · Comisión Fulbright</div>
+                  <div class="beca-meta-row">
+                    <span class="beca-meta-item">📍 Estados Unidos</span>
+                    <span class="beca-meta-item">🎓 Maestría / Doctorado</span>
+                    <span class="beca-meta-item">📅 Cierra: 15 may 2025</span>
+                  </div>
+                  <div class="beca-chips">
+                    <span class="beca-chip area">Todas las áreas</span>
+                    <span class="beca-chip pais">🇺🇸 USA</span>
+                    <span class="beca-chip nivel">Posgrado</span>
+                  </div>
+                </div>
+                <div class="card-beca-aside">
+                  <div>
+                    <div class="beca-monto">$45,000</div>
+                    <div class="beca-monto-label">por año</div>
+                  </div>
+                  <span class="deadline-badge urgente">⚡ Cierra pronto</span>
+                </div>
+              </a>
+
+              <a href="beca-detalle.html" class="card-beca-resultado">
+                <div>
+                  <div class="beca-nombre">Erasmus+ Estudios de Máster</div>
+                  <div class="beca-organismo">Comisión Europea · Unión Europea</div>
+                  <div class="beca-meta-row">
+                    <span class="beca-meta-item">📍 Europa (28 países)</span>
+                    <span class="beca-meta-item">🎓 Maestría</span>
+                    <span class="beca-meta-item">📅 Cierra: 10 jun 2025</span>
+                  </div>
+                  <div class="beca-chips">
+                    <span class="beca-chip area">Todas las áreas</span>
+                    <span class="beca-chip pais">🇪🇺 Europa</span>
+                    <span class="beca-chip nivel">Máster</span>
+                  </div>
+                </div>
+                <div class="card-beca-aside">
+                  <div>
+                    <div class="beca-monto">€24,000</div>
+                    <div class="beca-monto-label">por año</div>
+                  </div>
+                  <span class="deadline-badge proximo">📅 2 meses</span>
+                </div>
+              </a>
+
+              <a href="beca-detalle.html" class="card-beca-resultado">
+                <div>
+                  <div class="beca-nombre">DAAD Becas de Investigación</div>
+                  <div class="beca-organismo">Servicio Alemán de Intercambio Académico</div>
+                  <div class="beca-meta-row">
+                    <span class="beca-meta-item">📍 Alemania</span>
+                    <span class="beca-meta-item">🎓 Maestría / Doctorado</span>
+                    <span class="beca-meta-item">📅 Cierra: 30 ago 2025</span>
+                  </div>
+                  <div class="beca-chips">
+                    <span class="beca-chip area">Ciencias e Ingeniería</span>
+                    <span class="beca-chip pais">🇩🇪 Alemania</span>
+                    <span class="beca-chip nivel">Posgrado</span>
+                  </div>
+                </div>
+                <div class="card-beca-aside">
+                  <div>
+                    <div class="beca-monto">€1,200</div>
+                    <div class="beca-monto-label">por mes</div>
+                  </div>
+                  <span class="deadline-badge normal">✅ Abierta</span>
+                </div>
+              </a>
+
+              <a href="beca-detalle.html" class="card-beca-resultado">
+                <div>
+                  <div class="beca-nombre">Beca OEA para Estudios de Posgrado</div>
+                  <div class="beca-organismo">Organización de los Estados Americanos</div>
+                  <div class="beca-meta-row">
+                    <span class="beca-meta-item">📍 América Latina y el Caribe</span>
+                    <span class="beca-meta-item">🎓 Maestría</span>
+                    <span class="beca-meta-item">📅 Cierra: 15 sep 2025</span>
+                  </div>
+                  <div class="beca-chips">
+                    <span class="beca-chip area">Desarrollo Sostenible</span>
+                    <span class="beca-chip pais">🌎 América</span>
+                    <span class="beca-chip nivel">Máster</span>
+                  </div>
+                </div>
+                <div class="card-beca-aside">
+                  <div>
+                    <div class="beca-monto">$30,000</div>
+                    <div class="beca-monto-label">cobertura total</div>
+                  </div>
+                  <span class="deadline-badge normal">✅ Abierta</span>
+                </div>
+              </a>
+
+              <a href="beca-detalle.html" class="card-beca-resultado">
+                <div>
+                  <div class="beca-nombre">Beca LASPAU para Ciencias y Tecnología</div>
+                  <div class="beca-organismo">LASPAU · Harvard University</div>
+                  <div class="beca-meta-row">
+                    <span class="beca-meta-item">📍 Estados Unidos</span>
+                    <span class="beca-meta-item">🎓 Doctorado</span>
+                    <span class="beca-meta-item">📅 Cierra: 1 oct 2025</span>
+                  </div>
+                  <div class="beca-chips">
+                    <span class="beca-chip area">Ingeniería y TIC</span>
+                    <span class="beca-chip pais">🇺🇸 USA</span>
+                    <span class="beca-chip nivel">Doctorado</span>
+                  </div>
+                </div>
+                <div class="card-beca-aside">
+                  <div>
+                    <div class="beca-monto">$85,000</div>
+                    <div class="beca-monto-label">por año</div>
+                  </div>
+                  <span class="deadline-badge normal">✅ Abierta</span>
+                </div>
+              </a>
+
+              <a href="beca-detalle.html" class="card-beca-resultado">
+                <div>
+                  <div class="beca-nombre">Beca Coimbra Group — Intercambio Universitario</div>
+                  <div class="beca-organismo">Coimbra Group · Red Europea de Universidades</div>
+                  <div class="beca-meta-row">
+                    <span class="beca-meta-item">📍 Europa</span>
+                    <span class="beca-meta-item">🎓 Pregrado / Máster</span>
+                    <span class="beca-meta-item">📅 Cierra: 28 feb 2026</span>
+                  </div>
+                  <div class="beca-chips">
+                    <span class="beca-chip area">Humanidades y Ciencias</span>
+                    <span class="beca-chip pais">🇪🇺 Europa</span>
+                    <span class="beca-chip nivel">Intercambio</span>
+                  </div>
+                </div>
+                <div class="card-beca-aside">
+                  <div>
+                    <div class="beca-monto">€800</div>
+                    <div class="beca-monto-label">por mes</div>
+                  </div>
+                  <span class="deadline-badge normal">✅ Abierta</span>
+                </div>
+              </a>
+
+            </div>
+
+            <!-- Paginación -->
+            <div class="paginacion">
+              <button class="pag-btn" disabled>‹</button>
+              <button class="pag-btn active">1</button>
+              <button class="pag-btn">2</button>
+              <button class="pag-btn">3</button>
+              <span class="pag-sep">…</span>
+              <button class="pag-btn">13</button>
+              <button class="pag-btn">›</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+    <div data-include="partials/footer.html"></div>
+    <script src="js/includes.js"></script>
+    <script>
+      function buscar() {
+        const q = document.getElementById('searchInput').value.trim();
+        if (q) console.log('Buscando:', q);
+      }
+      document.getElementById('searchInput').addEventListener('keydown', e => {
+        if (e.key === 'Enter') buscar();
+      });
+      document.querySelectorAll('.quick-tag').forEach(t => {
+        t.addEventListener('click', () => {
+          document.getElementById('searchInput').value = t.textContent;
+          buscar();
+        });
+      });
+      function limpiarFiltros() {
+        document.querySelectorAll('.sidebar-filtros input[type=checkbox]').forEach(c => c.checked = false);
+      }
+    </script>
+  </body>
+</html>

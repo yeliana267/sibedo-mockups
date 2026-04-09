@@ -283,4 +283,72 @@ h4 {
   .navbar-menu {
     gap: var(--space-4);
   }
+@media (max-width: 992px) {
+    .page-centered,
+    .page-results {
+        max-width: 100%;
+        padding: 0 var(--space-4);
+    }
+
+    .search-filters {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .becas-grid,
+    .testimonios-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .page-centered,
+    .page-results,
+    .container {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 16px;
+        padding-right: 16px;
+        box-sizing: border-box;
+    }
+
+    .search-filters {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .search-filters input,
+    .search-filters select,
+    .search-filters button {
+        width: 100%;
+        min-height: 48px;
+    }
+
+    .becas-grid,
+    .testimonios-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .card {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 1.7rem;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
 }
