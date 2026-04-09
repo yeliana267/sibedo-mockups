@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIBEDO - Becas para estudiantes dominicanos</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <style>
+      /* Estilos específicos del home */
+      .hero {
+        background: linear-gradient(
+          135deg,
+          var(--color-primary-light) 0%,
+          white 100%
+        );
+        padding: var(--space-20) 0;
+        text-align: center;
+      }
+      .hero-title {
+        font-size: var(--fs-5xl);
+        font-weight: var(--fw-bold);
+        color: var(--color-text);
+        max-width: 800px;
+        margin: 0 auto var(--space-5);
+        line-height: 1.1;
+      }
+      .hero-title span {
+        color: var(--color-primary);
+      }
+      .hero-subtitle {
+        font-size: var(--fs-xl);
+        color: var(--color-text-soft);
+        max-width: 640px;
+        margin: 0 auto var(--space-8);
+      }
+      .hero-actions {
+        display: flex;
+        gap: var(--space-4);
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: var(--space-12);
+        margin-top: var(--space-12);
+        flex-wrap: wrap;
+      }
+      .hero-stat-number {
+        font-family: var(--font-heading);
+        font-size: var(--fs-4xl);
+        font-weight: var(--fw-bold);
+        color: var(--color-primary);
+        display: block;
+      }
+      .hero-stat-label {
+        font-size: var(--fs-sm);
+        color: var(--color-text-soft);
+      }
+
+      /* Cómo funciona */
+      .step-card {
+        text-align: center;
+        padding: var(--space-6);
+      }
+      .step-number {
+        width: 56px;
+        height: 56px;
+        background-color: var(--color-primary-light);
+        color: var(--color-primary);
+        border-radius: var(--radius-full);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-heading);
+        font-size: var(--fs-2xl);
+        font-weight: var(--fw-bold);
+        margin-bottom: var(--space-4);
+      }
+      .step-title {
+        font-family: var(--font-heading);
+        font-size: var(--fs-xl);
+        font-weight: var(--fw-semibold);
+        margin-bottom: var(--space-2);
+      }
+      .step-text {
+        color: var(--color-text-soft);
+        font-size: var(--fs-sm);
+      }
+
+      /* CTA final */
+      .cta-section {
+        background-color: var(--color-primary);
+        color: white;
+        padding: var(--space-16) 0;
+        text-align: center;
+        border-radius: var(--radius-xl);
+        margin: 0 var(--space-6);
+      }
+      .cta-title {
+        color: white;
+        font-size: var(--fs-3xl);
+        margin-bottom: var(--space-4);
+      }
+      .cta-text {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: var(--fs-lg);
+        max-width: 560px;
+        margin: 0 auto var(--space-8);
+      }
+    </style>
+  </head>
+  <body>
+    <div data-include="partials/nav.html"></div>
+
+    <main>
+      <!-- HERO -->
+      <section class="hero">
+        <div class="container">
+          <h1 class="hero-title">
+            Encuentra la beca <span>perfecta</span> para tu futuro
+          </h1>
+          <p class="hero-subtitle">
+            La primera plataforma en República Dominicana que centraliza becas
+            nacionales e internacionales con guías paso a paso para postular.
+          </p>
+          <div class="hero-actions">
+            <a href="buscar.html" class="btn btn-primary btn-lg"
+              >Buscar becas</a
+            >
+            <a href="#como-funciona" class="btn btn-secondary btn-lg"
+              >Cómo funciona</a
+            >
+          </div>
+
+          <div class="hero-stats">
+            <div>
+              <span class="hero-stat-number">+150</span>
+              <span class="hero-stat-label">Becas activas</span>
+            </div>
+            <div>
+              <span class="hero-stat-number">25</span>
+              <span class="hero-stat-label">Países de destino</span>
+            </div>
+            <div>
+              <span class="hero-stat-number">+500</span>
+              <span class="hero-stat-label">Estudiantes ayudados</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CÓMO FUNCIONA -->
+      <section class="section" id="como-funciona">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-eyebrow">Cómo funciona</span>
+            <h2 class="section-title">Tu próxima beca en 3 pasos</h2>
+            <p class="section-subtitle">
+              Diseñamos SIBEDO para que postular a una beca sea simple, claro y
+              sin estrés.
+            </p>
+          </div>
+
+          <div class="grid grid-3">
+            <div class="step-card">
+              <div class="step-number">1</div>
+              <h3 class="step-title">Busca y filtra</h3>
+              <p class="step-text">
+                Filtra becas por nivel académico, área de estudio o país de
+                destino. Encuentra solo lo que aplica a tu perfil.
+              </p>
+            </div>
+            <div class="step-card">
+              <div class="step-number">2</div>
+              <h3 class="step-title">Conoce los detalles</h3>
+              <p class="step-text">
+                Cada beca tiene su página con requisitos completos, fechas clave
+                e institución convocante.
+              </p>
+            </div>
+            <div class="step-card">
+              <div class="step-number">3</div>
+              <h3 class="step-title">Sigue la guía</h3>
+              <p class="step-text">
+                Accede a la guía de aplicación paso a paso vinculada a cada
+                convocatoria y postula con confianza.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BECAS DESTACADAS -->
+      <section class="section section-soft">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-eyebrow">Becas destacadas</span>
+            <h2 class="section-title">Convocatorias abiertas</h2>
+            <p class="section-subtitle">
+              Una muestra de las becas que tenemos disponibles ahora mismo.
+            </p>
+          </div>
+
+          <div class="grid grid-3">
+            <!-- Beca 1 -->
+            <article class="beca-card">
+              <div class="beca-card-header">
+                <div class="beca-card-institution">MESCyT</div>
+                <h3 class="beca-card-title">
+                  Beca Internacional de Maestría 2026
+                </h3>
+              </div>
+              <div class="beca-card-body">
+                <div class="beca-card-meta">
+                  <span class="badge badge-primary">Maestría</span>
+                  <span class="badge badge-accent">España</span>
+                </div>
+                <p class="text-soft" style="font-size: var(--fs-sm)">
+                  Programa de financiamiento completo para estudios de maestría
+                  en universidades europeas.
+                </p>
+              </div>
+              <div class="beca-card-footer">
+                <span class="beca-card-deadline">Cierra: 30 abr</span>
+                <a href="beca-detalle.html" class="btn btn-ghost btn-sm"
+                  >Ver más →</a
+                >
+              </div>
+            </article>
+
+            <!-- Beca 2 -->
+            <article class="beca-card">
+              <div class="beca-card-header">
+                <div class="beca-card-institution">Embajada de Francia</div>
+                <h3 class="beca-card-title">
+                  Bourse Eiffel para América Latina
+                </h3>
+              </div>
+              <div class="beca-card-body">
+                <div class="beca-card-meta">
+                  <span class="badge badge-primary">Doctorado</span>
+                  <span class="badge badge-accent">Francia</span>
+                </div>
+                <p class="text-soft" style="font-size: var(--fs-sm)">
+                  Beca de excelencia del gobierno francés para estudiantes
+                  internacionales destacados.
+                </p>
+              </div>
+              <div class="beca-card-footer">
+                <span class="beca-card-deadline">Cierra: 15 may</span>
+                <a href="beca-detalle.html" class="btn btn-ghost btn-sm"
+                  >Ver más →</a
+                >
+              </div>
+            </article>
+
+            <!-- Beca 3 -->
+            <article class="beca-card">
+              <div class="beca-card-header">
+                <div class="beca-card-institution">Fulbright RD</div>
+                <h3 class="beca-card-title">
+                  Programa Fulbright Faculty Development
+                </h3>
+              </div>
+              <div class="beca-card-body">
+                <div class="beca-card-meta">
+                  <span class="badge badge-primary">Maestría</span>
+                  <span class="badge badge-accent">Estados Unidos</span>
+                </div>
+                <p class="text-soft" style="font-size: var(--fs-sm)">
+                  Beca completa para docentes universitarios dominicanos en
+                  instituciones de EE.UU.
+                </p>
+              </div>
+              <div class="beca-card-footer">
+                <span class="beca-card-deadline">Cierra: 20 jun</span>
+                <a href="beca-detalle.html" class="btn btn-ghost btn-sm"
+                  >Ver más →</a
+                >
+              </div>
+            </article>
+          </div>
+
+          <div class="text-center mt-8">
+            <a href="buscar.html" class="btn btn-primary"
+              >Ver todas las becas</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA FINAL -->
+      <section style="padding: var(--space-16) 0">
+        <div class="cta-section">
+          <h2 class="cta-title">¿Listo para encontrar tu beca?</h2>
+          <p class="cta-text">
+            Explora más de 150 oportunidades activas y accede a guías detalladas
+            que te acompañan en todo el proceso de postulación.
+          </p>
+          <a href="buscar.html" class="btn btn-accent btn-lg"
+            >Empezar a buscar</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <div data-include="partials/footer.html"></div>
+
+    <script src="js/includes.js"></script>
+  </body>
+</html>

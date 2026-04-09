@@ -1,0 +1,59 @@
+<!--
+  ==========================================================
+  SIBEDO - PLANTILLA BASE
+  ==========================================================
+  Copia este archivo como punto de partida para crear una
+  nueva pantalla. Solo modifica:
+    1. El <title>
+    2. El contenido dentro de <main>
+
+  NO modifiques los links de CSS, el data-include del nav/footer
+  ni el script de includes - todo eso es automático.
+  ==========================================================
+-->
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIBEDO - [Cambia este título]</title>
+
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS del design system -->
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <!-- Navbar (cargado dinámicamente desde partials/nav.html) -->
+    <div data-include="partials/nav.html"></div>
+
+    <!-- ====================================================
+       AQUÍ VA EL CONTENIDO ÚNICO DE TU PÁGINA
+       ==================================================== -->
+    <main>
+      <section class="section">
+        <div class="container">
+          <h1>Título de tu página</h1>
+          <p class="text-soft mt-4">
+            Reemplaza este contenido con el de tu pantalla.
+          </p>
+        </div>
+      </section>
+    </main>
+    <!-- ==================================================== -->
+
+    <!-- Footer (cargado dinámicamente desde partials/footer.html) -->
+    <div data-include="partials/footer.html"></div>
+
+    <!-- Script de includes (siempre al final del body) -->
+    <script src="js/includes.js"></script>
+  </body>
+</html>

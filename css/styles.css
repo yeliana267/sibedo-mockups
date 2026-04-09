@@ -1,0 +1,286 @@
+/* ============================================
+   SIBEDO - Estilos generales
+   Reset, layout base, navbar, footer, utilidades
+   ============================================ */
+
+/* ---------- RESET ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+a:hover {
+  color: var(--color-primary-dark);
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: var(--fw-semibold);
+  line-height: 1.2;
+  color: var(--color-text);
+}
+
+h1 {
+  font-size: var(--fs-4xl);
+}
+h2 {
+  font-size: var(--fs-3xl);
+}
+h3 {
+  font-size: var(--fs-2xl);
+}
+h4 {
+  font-size: var(--fs-xl);
+}
+
+/* ---------- CONTAINER ---------- */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+/* ---------- NAVBAR ---------- */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: white;
+  border-bottom: 1px solid var(--color-border);
+  height: var(--header-height);
+}
+
+.navbar-container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-logo {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+  color: var(--color-primary);
+  text-decoration: none;
+}
+.navbar-logo span {
+  color: var(--color-accent);
+}
+
+.navbar-menu {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.navbar-link {
+  color: var(--color-text);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-sm);
+}
+.navbar-link:hover {
+  color: var(--color-primary);
+}
+
+/* ---------- FOOTER ---------- */
+.footer {
+  background-color: var(--color-text);
+  color: white;
+  padding: var(--space-12) 0 var(--space-6);
+  margin-top: var(--space-20);
+}
+
+.footer-container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: var(--space-8);
+  margin-bottom: var(--space-8);
+}
+
+.footer-brand-name {
+  font-family: var(--font-heading);
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-bold);
+  margin-bottom: var(--space-3);
+  color: white;
+}
+.footer-brand-name span {
+  color: var(--color-accent);
+}
+
+.footer-brand-text {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--fs-sm);
+  max-width: 320px;
+}
+
+.footer-title {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-4);
+  color: white;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.footer-links a {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--fs-sm);
+}
+.footer-links a:hover {
+  color: var(--color-accent);
+}
+
+.footer-bottom {
+  padding-top: var(--space-6);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: var(--fs-sm);
+}
+
+/* ---------- SECCIONES ---------- */
+.section {
+  padding: var(--space-20) 0;
+}
+.section-soft {
+  background-color: var(--color-bg-soft);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+}
+
+.section-eyebrow {
+  display: inline-block;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-3);
+}
+
+.section-title {
+  font-size: var(--fs-4xl);
+  margin-bottom: var(--space-3);
+}
+
+.section-subtitle {
+  color: var(--color-text-soft);
+  font-size: var(--fs-lg);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ---------- GRIDS ---------- */
+.grid {
+  display: grid;
+  gap: var(--space-6);
+}
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* ---------- UTILIDADES ---------- */
+.text-center {
+  text-align: center;
+}
+.text-soft {
+  color: var(--color-text-soft);
+}
+.mt-4 {
+  margin-top: var(--space-4);
+}
+.mt-8 {
+  margin-top: var(--space-8);
+}
+.mb-4 {
+  margin-bottom: var(--space-4);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+  h1 {
+    font-size: var(--fs-3xl);
+  }
+  h2 {
+    font-size: var(--fs-2xl);
+  }
+  .section {
+    padding: var(--space-12) 0;
+  }
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  .navbar-menu {
+    gap: var(--space-4);
+  }
+}
