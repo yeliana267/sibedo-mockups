@@ -69,7 +69,6 @@ sibedo-mockups/
 ## Reglas del equipo
 
 - ✅ Usa **siempre** las variables de `variables.css` (colores, espaciados, tipografía). Nunca hardcodees colores hex.
-- ✅ Trabaja en tu **propia rama** (`yeli/feature`, `mariana/feature`, etc.) y haz pull request a `main`
 - ✅ Antes de empezar a trabajar, siempre haz `git pull` desde `main`
 - ❌ No edites `variables.css`, `components.css`, ni los `partials/` sin avisar al equipo
 - ❌ No abras el HTML con doble click — usa Live Server
