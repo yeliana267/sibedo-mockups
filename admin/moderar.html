@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIBEDO Admin - Moderación de testimonios</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
+
+    <style>
+      :root {
+        --sidebar-width: 280px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--font-body);
+        background-color: #f8fbff;
+        color: var(--color-text);
+      }
+
+      .admin-layout {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      .admin-sidebar {
+        width: var(--sidebar-width);
+        background: #ffffff;
+        border-right: 1px solid var(--color-border);
+        padding: var(--space-6);
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .sidebar-top {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-8);
+      }
+
+      .logo {
+        font-family: var(--font-heading);
+        font-size: 1.9rem;
+        font-weight: var(--fw-bold);
+        text-decoration: none;
+        letter-spacing: -0.02em;
+      }
+
+      .logo .sib {
+        color: var(--color-primary);
+      }
+
+      .logo .edo {
+        color: var(--color-accent);
+      }
+
+      .sidebar-nav {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+
+      .sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        padding: 0.95rem 1rem;
+        border-radius: var(--radius-lg);
+        text-decoration: none;
+        color: var(--color-text-soft);
+        font-weight: var(--fw-medium);
+        transition: all 0.2s ease;
+      }
+
+      .sidebar-link:hover,
+      .sidebar-link.active {
+        background-color: var(--color-primary-light);
+        color: var(--color-primary);
+      }
+
+      .sidebar-link-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: var(--radius-md);
+        background-color: #eff6ff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: var(--fs-sm);
+        font-weight: var(--fw-bold);
+        color: var(--color-primary);
+      }
+
+      .sidebar-bottom {
+        border-top: 1px solid var(--color-border);
+        padding-top: var(--space-5);
+      }
+
+      .admin-user {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        margin-bottom: var(--space-4);
+      }
+
+      .admin-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--color-primary), #1d4ed8);
+        color: white;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: var(--fw-bold);
+        font-family: var(--font-heading);
+      }
+
+      .admin-user-name {
+        font-weight: var(--fw-semibold);
+        color: var(--color-text);
+      }
+
+      .admin-user-role {
+        font-size: var(--fs-sm);
+        color: var(--color-text-soft);
+      }
+
+      .logout-btn {
+        width: 100%;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.95rem 1rem;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--color-border);
+        background: white;
+        color: var(--color-text);
+        font-weight: var(--fw-semibold);
+        text-decoration: none;
+        transition: all 0.2s ease;
+      }
+
+      .logout-btn:hover {
+        border-color: var(--color-primary);
+        color: var(--color-primary);
+      }
+
+      .admin-main {
+        margin-left: var(--sidebar-width);
+        width: calc(100% - var(--sidebar-width));
+        padding: var(--space-8);
+      }
+
+      .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: var(--space-4);
+        margin-bottom: var(--space-6);
+      }
+
+      .page-title {
+        margin: 0;
+        font-family: var(--font-heading);
+        font-size: var(--fs-4xl);
+      }
+
+      .page-subtitle {
+        margin: var(--space-2) 0 0;
+        color: var(--color-text-soft);
+        font-size: var(--fs-base);
+      }
+
+      .pending-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 42px;
+        height: 42px;
+        padding: 0 1rem;
+        border-radius: var(--radius-full);
+        background-color: #fee2e2;
+        color: #dc2626;
+        font-weight: var(--fw-bold);
+        font-size: var(--fs-base);
+      }
+
+      .tabs {
+        display: flex;
+        gap: var(--space-3);
+        flex-wrap: wrap;
+        margin-bottom: var(--space-6);
+      }
+
+      .tab-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.9rem 1.2rem;
+        border-radius: var(--radius-full);
+        text-decoration: none;
+        border: 1px solid var(--color-border);
+        background-color: white;
+        color: var(--color-text-soft);
+        font-weight: var(--fw-semibold);
+        transition: all 0.2s ease;
+      }
+
+      .tab-btn.active {
+        background-color: var(--color-primary);
+        color: white;
+        border-color: var(--color-primary);
+      }
+
+      .tab-btn:hover {
+        border-color: var(--color-primary);
+        color: var(--color-primary);
+      }
+
+      .tab-btn.active:hover {
+        color: white;
+      }
+
+      .testimonials-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-5);
+      }
+
+      .testimonial-card {
+        background: white;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-2xl);
+        padding: var(--space-6);
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+      }
+
+      .testimonial-top {
+        display: flex;
+        justify-content: space-between;
+        gap: var(--space-4);
+        flex-wrap: wrap;
+        margin-bottom: var(--space-4);
+      }
+
+      .sender-name {
+        margin: 0 0 0.35rem;
+        font-size: var(--fs-xl);
+        font-family: var(--font-heading);
+      }
+
+      .sender-meta {
+        margin: 0;
+        color: var(--color-text-soft);
+        font-size: var(--fs-sm);
+        line-height: 1.6;
+      }
+
+      .testimonial-tag {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.55rem 0.9rem;
+        border-radius: var(--radius-full);
+        background-color: var(--color-primary-light);
+        color: var(--color-primary);
+        font-size: var(--fs-sm);
+        font-weight: var(--fw-semibold);
+        height: fit-content;
+      }
+
+      .testimonial-info {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-4);
+        margin-bottom: var(--space-5);
+      }
+
+      .info-box {
+        background-color: #f8fbff;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-xl);
+        padding: var(--space-4);
+      }
+
+      .info-label {
+        display: block;
+        font-size: var(--fs-xs);
+        font-weight: var(--fw-bold);
+        color: var(--color-text-soft);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        margin-bottom: 0.4rem;
+      }
+
+      .info-value {
+        color: var(--color-text);
+        font-weight: var(--fw-semibold);
+      }
+
+      .testimonial-text-wrap {
+        margin-bottom: var(--space-5);
+      }
+
+      .testimonial-text-label {
+        display: block;
+        font-size: var(--fs-sm);
+        font-weight: var(--fw-semibold);
+        margin-bottom: var(--space-2);
+        color: var(--color-text);
+      }
+
+      .testimonial-text {
+        margin: 0;
+        padding: var(--space-4);
+        background-color: #fcfdff;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-xl);
+        color: var(--color-text);
+        line-height: 1.7;
+        font-size: var(--fs-base);
+      }
+
+      .testimonial-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: var(--space-3);
+        flex-wrap: wrap;
+      }
+
+      .btn-secondary-custom,
+      .btn-success-custom,
+      .btn-danger-custom {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        border-radius: var(--radius-lg);
+        padding: 0.9rem 1.15rem;
+        font-weight: var(--fw-semibold);
+        border: 1px solid transparent;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        font-family: var(--font-body);
+        font-size: var(--fs-sm);
+      }
+
+      .btn-secondary-custom {
+        background: white;
+        border-color: var(--color-border);
+        color: var(--color-text);
+      }
+
+      .btn-secondary-custom:hover {
+        border-color: var(--color-primary);
+        color: var(--color-primary);
+      }
+
+      .btn-success-custom {
+        background: #16a34a;
+        border-color: #16a34a;
+        color: white;
+      }
+
+      .btn-success-custom:hover {
+        background: #15803d;
+        border-color: #15803d;
+      }
+
+      .btn-danger-custom {
+        background: #dc2626;
+        border-color: #dc2626;
+        color: white;
+      }
+
+      .btn-danger-custom:hover {
+        background: #b91c1c;
+        border-color: #b91c1c;
+      }
+
+      @media (max-width: 900px) {
+        .admin-sidebar {
+          position: static;
+          width: 100%;
+          height: auto;
+          border-right: none;
+          border-bottom: 1px solid var(--color-border);
+        }
+
+        .admin-layout {
+          flex-direction: column;
+        }
+
+        .admin-main {
+          width: 100%;
+          margin-left: 0;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .admin-main {
+          padding: var(--space-5);
+        }
+
+        .page-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .testimonial-info {
+          grid-template-columns: 1fr;
+        }
+
+        .testimonial-actions {
+          flex-direction: column;
+        }
+
+        .btn-secondary-custom,
+        .btn-success-custom,
+        .btn-danger-custom {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="admin-layout">
+      <aside class="admin-sidebar">
+        <div class="sidebar-top">
+          <a href="../index.html" class="logo" aria-label="SIBEDO">
+            <span class="sib">SIBE</span><span class="edo">DO</span>
+          </a>
+
+          <nav class="sidebar-nav">
+            <a href="dashboard.html" class="sidebar-link">
+              <span class="sidebar-link-icon">D</span>
+              <span>Dashboard</span>
+            </a>
+            <a href="agregar-beca.html" class="sidebar-link">
+              <span class="sidebar-link-icon">B</span>
+              <span>Becas</span>
+            </a>
+            <a href="moderar.html" class="sidebar-link active">
+              <span class="sidebar-link-icon">T</span>
+              <span>Testimonios</span>
+            </a>
+          </nav>
+        </div>
+
+        <div class="sidebar-bottom">
+          <div class="admin-user">
+            <div class="admin-avatar">AD</div>
+            <div>
+              <div class="admin-user-name">Administrador</div>
+              <div class="admin-user-role">Panel de gestión</div>
+            </div>
+          </div>
+
+          <a href="login.html" class="logout-btn">Cerrar sesión</a>
+        </div>
+      </aside>
+
+      <main class="admin-main">
+        <header class="page-header">
+          <div>
+            <h1 class="page-title">Moderación de testimonios</h1>
+            <p class="page-subtitle">
+              Revisa, aprueba o rechaza los testimonios enviados por los
+              usuarios.
+            </p>
+          </div>
+
+          <div class="pending-badge">7</div>
+        </header>
+
+        <nav class="tabs">
+          <a href="#" class="tab-btn active">Pendientes</a>
+          <a href="#" class="tab-btn">Aprobados</a>
+          <a href="#" class="tab-btn">Rechazados</a>
+        </nav>
+
+        <section class="testimonials-list">
+          <article class="testimonial-card">
+            <div class="testimonial-top">
+              <div>
+                <h2 class="sender-name">Laura Martínez</h2>
+                <p class="sender-meta">
+                  laura.martinez@gmail.com<br />
+                  Enviado el 07 de abril de 2026
+                </p>
+              </div>
+              <span class="testimonial-tag">Pendiente</span>
+            </div>
+
+            <div class="testimonial-info">
+              <div class="info-box">
+                <span class="info-label">Beca</span>
+                <span class="info-value"
+                  >Beca Internacional de Maestría 2026</span
+                >
+              </div>
+              <div class="info-box">
+                <span class="info-label">Universidad</span>
+                <span class="info-value">Universidad de Barcelona</span>
+              </div>
+            </div>
+
+            <div class="testimonial-text-wrap">
+              <span class="testimonial-text-label">Testimonio</span>
+              <p class="testimonial-text">
+                Gracias a esta beca pude continuar mis estudios en el extranjero
+                y acceder a una formación de alto nivel. El proceso fue
+                exigente, pero contar con orientación clara me ayudó a preparar
+                mejor mis documentos y cumplir con cada requisito a tiempo. Ha
+                sido una experiencia que cambió mi vida académica y profesional.
+              </p>
+            </div>
+
+            <div class="testimonial-actions">
+              <a href="#" class="btn-secondary-custom">Ver detalles</a>
+              <button type="button" class="btn-success-custom">
+                ✓ Aprobar
+              </button>
+              <button type="button" class="btn-danger-custom">
+                ✗ Rechazar
+              </button>
+            </div>
+          </article>
+
+          <article class="testimonial-card">
+            <div class="testimonial-top">
+              <div>
+                <h2 class="sender-name">Carlos Peña</h2>
+                <p class="sender-meta">
+                  carlospena@outlook.com<br />
+                  Enviado el 06 de abril de 2026
+                </p>
+              </div>
+              <span class="testimonial-tag">Pendiente</span>
+            </div>
+
+            <div class="testimonial-info">
+              <div class="info-box">
+                <span class="info-label">Beca</span>
+                <span class="info-value"
+                  >Programa Fulbright Faculty Development</span
+                >
+              </div>
+              <div class="info-box">
+                <span class="info-label">Universidad</span>
+                <span class="info-value">Arizona State University</span>
+              </div>
+            </div>
+
+            <div class="testimonial-text-wrap">
+              <span class="testimonial-text-label">Testimonio</span>
+              <p class="testimonial-text">
+                La oportunidad de estudiar mediante Fulbright me permitió
+                fortalecer mis capacidades docentes y ampliar mi visión
+                profesional. La plataforma hizo más fácil entender los pasos del
+                proceso y reunir la documentación requerida sin tanta confusión.
+                Recomiendo esta experiencia a otros profesionales dominicanos
+                que quieran seguir creciendo.
+              </p>
+            </div>
+
+            <div class="testimonial-actions">
+              <a href="#" class="btn-secondary-custom">Ver detalles</a>
+              <button type="button" class="btn-success-custom">
+                ✓ Aprobar
+              </button>
+              <button type="button" class="btn-danger-custom">
+                ✗ Rechazar
+              </button>
+            </div>
+          </article>
+
+          <article class="testimonial-card">
+            <div class="testimonial-top">
+              <div>
+                <h2 class="sender-name">Ana Rodríguez</h2>
+                <p class="sender-meta">
+                  anarodriguez@email.com<br />
+                  Enviado el 05 de abril de 2026
+                </p>
+              </div>
+              <span class="testimonial-tag">Pendiente</span>
+            </div>
+
+            <div class="testimonial-info">
+              <div class="info-box">
+                <span class="info-label">Beca</span>
+                <span class="info-value"
+                  >Bourse Eiffel para América Latina</span
+                >
+              </div>
+              <div class="info-box">
+                <span class="info-label">Universidad</span>
+                <span class="info-value">Université Paris-Saclay</span>
+              </div>
+            </div>
+
+            <div class="testimonial-text-wrap">
+              <span class="testimonial-text-label">Testimonio</span>
+              <p class="testimonial-text">
+                Obtener esta beca fue uno de los logros más importantes de mi
+                vida. El acompañamiento con la información, los requisitos y las
+                fechas clave hizo que el proceso fuera mucho más claro. Hoy
+                puedo decir que estudiar en Francia abrió nuevas puertas para mi
+                carrera y me motivó a seguir preparándome académicamente.
+              </p>
+            </div>
+
+            <div class="testimonial-actions">
+              <a href="#" class="btn-secondary-custom">Ver detalles</a>
+              <button type="button" class="btn-success-custom">
+                ✓ Aprobar
+              </button>
+              <button type="button" class="btn-danger-custom">
+                ✗ Rechazar
+              </button>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

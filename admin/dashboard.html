@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIBEDO Admin - Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
+
+    <style>
+      :root {
+        --sidebar-width: 280px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--font-body);
+        background-color: #f8fbff;
+        color: var(--color-text);
+      }
+
+      .admin-layout {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      .admin-sidebar {
+        width: var(--sidebar-width);
+        background: #ffffff;
+        border-right: 1px solid var(--color-border);
+        padding: var(--space-6);
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .sidebar-top {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-8);
+      }
+
+      .logo {
+        font-family: var(--font-heading);
+        font-size: 1.9rem;
+        font-weight: var(--fw-bold);
+        text-decoration: none;
+        letter-spacing: -0.02em;
+      }
+
+      .logo .sib {
+        color: var(--color-primary);
+      }
+
+      .logo .edo {
+        color: var(--color-accent);
+      }
+
+      .sidebar-nav {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+
+      .sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        padding: 0.95rem 1rem;
+        border-radius: var(--radius-lg);
+        text-decoration: none;
+        color: var(--color-text-soft);
+        font-weight: var(--fw-medium);
+        transition: all 0.2s ease;
+      }
+
+      .sidebar-link:hover,
+      .sidebar-link.active {
+        background-color: var(--color-primary-light);
+        color: var(--color-primary);
+      }
+
+      .sidebar-link-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: var(--radius-md);
+        background-color: #eff6ff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: var(--fs-sm);
+        font-weight: var(--fw-bold);
+        color: var(--color-primary);
+      }
+
+      .sidebar-bottom {
+        border-top: 1px solid var(--color-border);
+        padding-top: var(--space-5);
+      }
+
+      .admin-user {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        margin-bottom: var(--space-4);
+      }
+
+      .admin-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--color-primary), #1d4ed8);
+        color: white;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: var(--fw-bold);
+        font-family: var(--font-heading);
+      }
+
+      .admin-user-name {
+        font-weight: var(--fw-semibold);
+        color: var(--color-text);
+      }
+
+      .admin-user-role {
+        font-size: var(--fs-sm);
+        color: var(--color-text-soft);
+      }
+
+      .logout-btn {
+        width: 100%;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.95rem 1rem;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--color-border);
+        background: white;
+        color: var(--color-text);
+        font-weight: var(--fw-semibold);
+        text-decoration: none;
+        transition: all 0.2s ease;
+      }
+
+      .logout-btn:hover {
+        border-color: var(--color-primary);
+        color: var(--color-primary);
+      }
+
+      .admin-main {
+        margin-left: var(--sidebar-width);
+        width: calc(100% - var(--sidebar-width));
+        padding: var(--space-8);
+      }
+
+      .page-header {
+        margin-bottom: var(--space-8);
+      }
+
+      .page-title {
+        margin: 0 0 var(--space-2);
+        font-family: var(--font-heading);
+        font-size: var(--fs-4xl);
+      }
+
+      .page-subtitle {
+        margin: 0;
+        color: var(--color-text-soft);
+        font-size: var(--fs-base);
+      }
+
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--space-5);
+        margin-bottom: var(--space-8);
+      }
+
+      .metric-card {
+        background: white;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-2xl);
+        padding: var(--space-5);
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+      }
+
+      .metric-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: var(--space-3);
+        margin-bottom: var(--space-5);
+      }
+
+      .metric-label {
+        color: var(--color-text-soft);
+        font-size: var(--fs-sm);
+        font-weight: var(--fw-medium);
+      }
+
+      .metric-icon {
+        width: 46px;
+        height: 46px;
+        border-radius: var(--radius-lg);
+        background-color: var(--color-primary-light);
+        color: var(--color-primary);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: var(--fw-bold);
+      }
+
+      .metric-value {
+        font-family: var(--font-heading);
+        font-size: var(--fs-4xl);
+        font-weight: var(--fw-bold);
+        color: var(--color-text);
+        line-height: 1;
+      }
+
+      .metric-helper {
+        margin-top: var(--space-2);
+        font-size: var(--fs-sm);
+        color: var(--color-text-soft);
+      }
+
+      .attention-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 28px;
+        height: 28px;
+        padding: 0 0.55rem;
+        border-radius: var(--radius-full);
+        background-color: #fee2e2;
+        color: #dc2626;
+        font-size: var(--fs-xs);
+        font-weight: var(--fw-bold);
+      }
+
+      .section-card {
+        background: white;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-2xl);
+        padding: var(--space-6);
+        margin-bottom: var(--space-6);
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: var(--space-4);
+        margin-bottom: var(--space-5);
+      }
+
+      .section-title {
+        margin: 0;
+        font-family: var(--font-heading);
+        font-size: var(--fs-2xl);
+      }
+
+      .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-4);
+      }
+
+      .quick-action-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        padding: 1.1rem 1.2rem;
+        border-radius: var(--radius-xl);
+        text-decoration: none;
+        font-weight: var(--fw-semibold);
+        border: 1px solid var(--color-border);
+        background: #f8fbff;
+        color: var(--color-text);
+        transition: all 0.2s ease;
+      }
+
+      .quick-action-btn.primary {
+        background: var(--color-primary);
+        color: white;
+        border-color: var(--color-primary);
+      }
+
+      .quick-action-btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .table-wrapper {
+        overflow-x: auto;
+      }
+
+      .admin-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .admin-table th,
+      .admin-table td {
+        padding: 1rem 0.75rem;
+        text-align: left;
+        border-bottom: 1px solid var(--color-border);
+        font-size: var(--fs-sm);
+      }
+
+      .admin-table th {
+        color: var(--color-text-soft);
+        font-weight: var(--fw-semibold);
+      }
+
+      .admin-table td {
+        color: var(--color-text);
+      }
+
+      .table-action {
+        color: var(--color-primary);
+        text-decoration: none;
+        font-weight: var(--fw-semibold);
+      }
+
+      .activity-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+      }
+
+      .activity-item {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--space-4);
+        padding-bottom: var(--space-4);
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .activity-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+
+      .activity-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: var(--color-primary);
+        margin-top: 0.4rem;
+        flex-shrink: 0;
+      }
+
+      .activity-title {
+        margin: 0 0 0.25rem;
+        font-weight: var(--fw-semibold);
+        color: var(--color-text);
+      }
+
+      .activity-meta {
+        margin: 0;
+        font-size: var(--fs-sm);
+        color: var(--color-text-soft);
+      }
+
+      @media (max-width: 1200px) {
+        .metrics-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .quick-actions {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 900px) {
+        .admin-sidebar {
+          position: static;
+          width: 100%;
+          height: auto;
+          border-right: none;
+          border-bottom: 1px solid var(--color-border);
+        }
+
+        .admin-layout {
+          flex-direction: column;
+        }
+
+        .admin-main {
+          width: 100%;
+          margin-left: 0;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .admin-main {
+          padding: var(--space-5);
+        }
+
+        .metrics-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .page-title {
+          font-size: var(--fs-3xl);
+        }
+
+        .section-card {
+          padding: var(--space-5);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="admin-layout">
+      <aside class="admin-sidebar">
+        <div class="sidebar-top">
+          <a href="../index.html" class="logo" aria-label="SIBEDO">
+            <span class="sib">SIBE</span><span class="edo">DO</span>
+          </a>
+
+          <nav class="sidebar-nav">
+            <a href="dashboard.html" class="sidebar-link active">
+              <span class="sidebar-link-icon">D</span>
+              <span>Dashboard</span>
+            </a>
+            <a href="agregar-beca.html" class="sidebar-link">
+              <span class="sidebar-link-icon">B</span>
+              <span>Becas</span>
+            </a>
+            <a href="moderar.html" class="sidebar-link">
+              <span class="sidebar-link-icon">T</span>
+              <span>Testimonios</span>
+            </a>
+            <a href="../guia.html" class="sidebar-link">
+              <span class="sidebar-link-icon">G</span>
+              <span>Guías</span>
+            </a>
+          </nav>
+        </div>
+
+        <div class="sidebar-bottom">
+          <div class="admin-user">
+            <div class="admin-avatar">AD</div>
+            <div>
+              <div class="admin-user-name">Administrador</div>
+              <div class="admin-user-role">Panel de gestión</div>
+            </div>
+          </div>
+
+          <a href="login.html" class="logout-btn">Cerrar sesión</a>
+        </div>
+      </aside>
+
+      <main class="admin-main">
+        <header class="page-header">
+          <h1 class="page-title">Hola, Administrador</h1>
+          <p class="page-subtitle">08 de abril de 2026</p>
+        </header>
+
+        <section class="metrics-grid">
+          <article class="metric-card">
+            <div class="metric-top">
+              <div class="metric-label">Becas activas</div>
+              <div class="metric-icon">BA</div>
+            </div>
+            <div class="metric-value">128</div>
+            <div class="metric-helper">
+              Convocatorias publicadas actualmente
+            </div>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-top">
+              <div class="metric-label">Becas próximas a cerrar</div>
+              <div class="metric-icon">PC</div>
+            </div>
+            <div class="metric-value">12</div>
+            <div class="metric-helper">Cierran en los próximos 7 días</div>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-top">
+              <div class="metric-label">Testimonios pendientes</div>
+              <div class="attention-badge">7</div>
+            </div>
+            <div class="metric-value">07</div>
+            <div class="metric-helper">Requieren revisión y moderación</div>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-top">
+              <div class="metric-label">Total de visitas del mes</div>
+              <div class="metric-icon">VM</div>
+            </div>
+            <div class="metric-value">18.4K</div>
+            <div class="metric-helper">Tráfico acumulado del mes actual</div>
+          </article>
+        </section>
+
+        <section class="section-card">
+          <div class="section-header">
+            <h2 class="section-title">Acciones rápidas</h2>
+          </div>
+
+          <div class="quick-actions">
+            <a href="agregar-beca.html" class="quick-action-btn primary">
+              Agregar nueva beca
+            </a>
+            <a href="moderar.html" class="quick-action-btn">
+              Modera testimonios
+            </a>
+            <a href="../guia.html" class="quick-action-btn"> Ver guías </a>
+          </div>
+        </section>
+
+        <section class="section-card">
+          <div class="section-header">
+            <h2 class="section-title">Becas próximas a cerrar</h2>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Institución</th>
+                  <th>Fecha de cierre</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Beca Internacional de Maestría 2026</td>
+                  <td>MESCyT</td>
+                  <td>12 abr 2026</td>
+                  <td>
+                    <a href="editar-beca.html" class="table-action">Editar</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Bourse Eiffel para América Latina</td>
+                  <td>Embajada de Francia</td>
+                  <td>14 abr 2026</td>
+                  <td>
+                    <a href="editar-beca.html" class="table-action">Editar</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Programa Fulbright Faculty Development</td>
+                  <td>Fulbright RD</td>
+                  <td>16 abr 2026</td>
+                  <td>
+                    <a href="editar-beca.html" class="table-action">Editar</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Beca de Especialización en Salud Pública</td>
+                  <td>OPS</td>
+                  <td>18 abr 2026</td>
+                  <td>
+                    <a href="editar-beca.html" class="table-action">Editar</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Beca Técnica en Innovación Digital</td>
+                  <td>INFOTEP</td>
+                  <td>20 abr 2026</td>
+                  <td>
+                    <a href="editar-beca.html" class="table-action">Editar</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section-card">
+          <div class="section-header">
+            <h2 class="section-title">Actividad reciente</h2>
+          </div>
+
+          <div class="activity-list">
+            <div class="activity-item">
+              <div class="activity-dot"></div>
+              <div>
+                <p class="activity-title">
+                  Se publicó una nueva beca internacional
+                </p>
+                <p class="activity-meta">Hace 12 minutos · por Administrador</p>
+              </div>
+            </div>
+
+            <div class="activity-item">
+              <div class="activity-dot"></div>
+              <div>
+                <p class="activity-title">Se aprobó un testimonio pendiente</p>
+                <p class="activity-meta">
+                  Hace 38 minutos · módulo Testimonios
+                </p>
+              </div>
+            </div>
+
+            <div class="activity-item">
+              <div class="activity-dot"></div>
+              <div>
+                <p class="activity-title">
+                  Se editó la guía de aplicación Fulbright
+                </p>
+                <p class="activity-meta">Hoy, 9:20 AM · módulo Guías</p>
+              </div>
+            </div>
+
+            <div class="activity-item">
+              <div class="activity-dot"></div>
+              <div>
+                <p class="activity-title">
+                  Se actualizó la fecha de cierre de una convocatoria
+                </p>
+                <p class="activity-meta">Hoy, 8:45 AM · módulo Becas</p>
+              </div>
+            </div>
+
+            <div class="activity-item">
+              <div class="activity-dot"></div>
+              <div>
+                <p class="activity-title">
+                  Inicio de sesión exitoso en el panel
+                </p>
+                <p class="activity-meta">Hoy, 8:10 AM · Administrador</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

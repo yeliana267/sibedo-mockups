@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIBEDO Admin - Editar beca</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
+
+    <style>
+      :root {
+        --sidebar-width: 280px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--font-body);
+        background-color: #f8fbff;
+        color: var(--color-text);
+      }
+
+      .admin-layout {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      .admin-sidebar {
+        width: var(--sidebar-width);
+        background: #ffffff;
+        border-right: 1px solid var(--color-border);
+        padding: var(--space-6);
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .sidebar-top {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-8);
+      }
+
+      .logo {
+        font-family: var(--font-heading);
+        font-size: 1.9rem;
+        font-weight: var(--fw-bold);
+        text-decoration: none;
+        letter-spacing: -0.02em;
+      }
+
+      .logo .sib {
+        color: var(--color-primary);
+      }
+
+      .logo .edo {
+        color: var(--color-accent);
+      }
+
+      .sidebar-nav {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+
+      .sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        padding: 0.95rem 1rem;
+        border-radius: var(--radius-lg);
+        text-decoration: none;
+        color: var(--color-text-soft);
+        font-weight: var(--fw-medium);
+        transition: all 0.2s ease;
+      }
+
+      .sidebar-link:hover,
+      .sidebar-link.active {
+        background-color: var(--color-primary-light);
+        color: var(--color-primary);
+      }
+
+      .sidebar-link-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: var(--radius-md);
+        background-color: #eff6ff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: var(--fs-sm);
+        font-weight: var(--fw-bold);
+        color: var(--color-primary);
+      }
+
+      .sidebar-bottom {
+        border-top: 1px solid var(--color-border);
+        padding-top: var(--space-5);
+      }
+
+      .admin-user {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        margin-bottom: var(--space-4);
+      }
+
+      .admin-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--color-primary), #1d4ed8);
+        color: white;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: var(--fw-bold);
+        font-family: var(--font-heading);
+      }
+
+      .admin-user-name {
+        font-weight: var(--fw-semibold);
+        color: var(--color-text);
+      }
+
+      .admin-user-role {
+        font-size: var(--fs-sm);
+        color: var(--color-text-soft);
+      }
+
+      .logout-btn {
+        width: 100%;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.95rem 1rem;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--color-border);
+        background: white;
+        color: var(--color-text);
+        font-weight: var(--fw-semibold);
+        text-decoration: none;
+        transition: all 0.2s ease;
+      }
+
+      .logout-btn:hover {
+        border-color: var(--color-primary);
+        color: var(--color-primary);
+      }
+
+      .admin-main {
+        margin-left: var(--sidebar-width);
+        width: calc(100% - var(--sidebar-width));
+        padding: var(--space-8);
+      }
+
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: var(--space-4);
+        font-size: var(--fs-sm);
+        color: var(--color-text-soft);
+      }
+
+      .breadcrumb a {
+        color: var(--color-text-soft);
+        text-decoration: none;
+      }
+
+      .breadcrumb a:hover {
+        color: var(--color-primary);
+      }
+
+      .info-banner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-3);
+        padding: 1rem 1.25rem;
+        background-color: #eff6ff;
+        border: 1px solid #bfdbfe;
+        border-radius: var(--radius-xl);
+        margin-bottom: var(--space-5);
+        color: var(--color-primary);
+        font-size: var(--fs-sm);
+        font-weight: var(--fw-medium);
+      }
+
+      .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: var(--space-4);
+        margin-bottom: var(--space-6);
+      }
+
+      .page-title {
+        margin: 0;
+        font-family: var(--font-heading);
+        font-size: var(--fs-4xl);
+        line-height: 1.1;
+      }
+
+      .page-subtitle {
+        margin: var(--space-2) 0 0;
+        color: var(--color-text-soft);
+        font-size: var(--fs-base);
+      }
+
+      .header-actions {
+        display: flex;
+        gap: var(--space-3);
+        flex-wrap: wrap;
+      }
+
+      .btn-secondary-custom,
+      .btn-primary-custom,
+      .btn-danger-custom {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        border-radius: var(--radius-lg);
+        padding: 0.95rem 1.25rem;
+        font-weight: var(--fw-semibold);
+        border: 1px solid transparent;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        font-family: var(--font-body);
+        font-size: var(--fs-base);
+      }
+
+      .btn-secondary-custom {
+        background: white;
+        border-color: var(--color-border);
+        color: var(--color-text);
+      }
+
+      .btn-secondary-custom:hover {
+        border-color: var(--color-primary);
+        color: var(--color-primary);
+      }
+
+      .btn-primary-custom {
+        background: var(--color-primary);
+        border-color: var(--color-primary);
+        color: white;
+      }
+
+      .btn-primary-custom:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 14px 30px rgba(37, 99, 235, 0.18);
+      }
+
+      .btn-danger-custom {
+        background: #dc2626;
+        border-color: #dc2626;
+        color: white;
+      }
+
+      .btn-danger-custom:hover {
+        background: #b91c1c;
+        border-color: #b91c1c;
+      }
+
+      .form-card {
+        background: white;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-2xl);
+        padding: var(--space-6);
+        margin-bottom: var(--space-6);
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+      }
+
+      .card-title {
+        margin: 0 0 var(--space-5);
+        font-family: var(--font-heading);
+        font-size: var(--fs-2xl);
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-5);
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+
+      .form-group.full {
+        grid-column: 1 / -1;
+      }
+
+      .form-label {
+        font-size: var(--fs-sm);
+        font-weight: var(--fw-semibold);
+        color: var(--color-text);
+      }
+
+      .form-input,
+      .form-select,
+      .form-textarea {
+        width: 100%;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        padding: 0.95rem 1rem;
+        font-family: var(--font-body);
+        font-size: var(--fs-base);
+        color: var(--color-text);
+        background: white;
+        outline: none;
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      .form-input:focus,
+      .form-select:focus,
+      .form-textarea:focus {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+      }
+
+      .form-textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+
+      .textarea-sm {
+        min-height: 100px;
+      }
+
+      .textarea-lg {
+        min-height: 180px;
+      }
+
+      .helper-text {
+        font-size: var(--fs-xs);
+        color: var(--color-text-soft);
+      }
+
+      .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: var(--space-4);
+        margin-top: var(--space-2);
+      }
+
+      @media (max-width: 900px) {
+        .admin-sidebar {
+          position: static;
+          width: 100%;
+          height: auto;
+          border-right: none;
+          border-bottom: 1px solid var(--color-border);
+        }
+
+        .admin-layout {
+          flex-direction: column;
+        }
+
+        .admin-main {
+          width: 100%;
+          margin-left: 0;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .admin-main {
+          padding: var(--space-5);
+        }
+
+        .page-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .header-actions {
+          width: 100%;
+          flex-direction: column;
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .form-actions {
+          flex-direction: column;
+        }
+
+        .btn-secondary-custom,
+        .btn-primary-custom,
+        .btn-danger-custom {
+          width: 100%;
+        }
+
+        .info-banner {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="admin-layout">
+      <aside class="admin-sidebar">
+        <div class="sidebar-top">
+          <a href="../index.html" class="logo" aria-label="SIBEDO">
+            <span class="sib">SIBE</span><span class="edo">DO</span>
+          </a>
+
+          <nav class="sidebar-nav">
+            <a href="dashboard.html" class="sidebar-link">
+              <span class="sidebar-link-icon">D</span>
+              <span>Dashboard</span>
+            </a>
+            <a href="editar-beca.html" class="sidebar-link active">
+              <span class="sidebar-link-icon">B</span>
+              <span>Becas</span>
+            </a>
+            <a href="moderar.html" class="sidebar-link">
+              <span class="sidebar-link-icon">T</span>
+              <span>Testimonios</span>
+            </a>
+            <a href="../guia.html" class="sidebar-link">
+              <span class="sidebar-link-icon">G</span>
+              <span>Guías</span>
+            </a>
+          </nav>
+        </div>
+
+        <div class="sidebar-bottom">
+          <div class="admin-user">
+            <div class="admin-avatar">AD</div>
+            <div>
+              <div class="admin-user-name">Administrador</div>
+              <div class="admin-user-role">Panel de gestión</div>
+            </div>
+          </div>
+
+          <a href="login.html" class="logout-btn">Cerrar sesión</a>
+        </div>
+      </aside>
+
+      <main class="admin-main">
+        <nav class="breadcrumb" aria-label="breadcrumb">
+          <a href="dashboard.html">Dashboard</a>
+          <span>›</span>
+          <a href="agregar-beca.html">Becas</a>
+          <span>›</span>
+          <span>Editar beca</span>
+        </nav>
+
+        <div class="info-banner">
+          <span
+            >Última modificación: 08 de abril de 2026, 10:45 AM por
+            Administrador</span
+          >
+        </div>
+
+        <header class="page-header">
+          <div>
+            <h1 class="page-title">
+              Editar beca: Beca Internacional de Maestría 2026
+            </h1>
+            <p class="page-subtitle">
+              Actualiza la información de la convocatoria registrada en el
+              sistema.
+            </p>
+          </div>
+
+          <div class="header-actions">
+            <button
+              type="button"
+              class="btn-danger-custom"
+              onclick="
+                confirm('¿Estás segura de que deseas eliminar esta beca?')
+              "
+            >
+              Eliminar beca
+            </button>
+            <a href="dashboard.html" class="btn-secondary-custom">Cancelar</a>
+          </div>
+        </header>
+
+        <form>
+          <section class="form-card">
+            <h2 class="card-title">Información general</h2>
+
+            <div class="form-grid">
+              <div class="form-group full">
+                <label for="nombre-beca" class="form-label"
+                  >Nombre de la beca</label
+                >
+                <input
+                  type="text"
+                  id="nombre-beca"
+                  class="form-input"
+                  value="Beca Internacional de Maestría 2026"
+                />
+              </div>
+
+              <div class="form-group full">
+                <label for="institucion" class="form-label"
+                  >Institución convocante</label
+                >
+                <input
+                  type="text"
+                  id="institucion"
+                  class="form-input"
+                  value="MESCyT"
+                />
+              </div>
+
+              <div class="form-group full">
+                <label for="descripcion-corta" class="form-label"
+                  >Descripción corta</label
+                >
+                <textarea
+                  id="descripcion-corta"
+                  class="form-textarea textarea-sm"
+                >
+Programa de financiamiento académico para estudios de maestría en universidades internacionales.</textarea
+                >
+              </div>
+
+              <div class="form-group full">
+                <label for="descripcion-extendida" class="form-label"
+                  >Descripción extendida</label
+                >
+                <textarea
+                  id="descripcion-extendida"
+                  class="form-textarea textarea-lg"
+                >
+Convocatoria dirigida a estudiantes dominicanos interesados en cursar estudios de maestría en el extranjero. La beca cubre beneficios académicos y apoyo durante el proceso de formación, permitiendo acceder a universidades reconocidas y fortalecer el perfil profesional del beneficiario.</textarea
+                >
+              </div>
+            </div>
+          </section>
+
+          <section class="form-card">
+            <h2 class="card-title">Categorización</h2>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="nivel" class="form-label">Nivel académico</label>
+                <select id="nivel" class="form-select">
+                  <option>Pregrado</option>
+                  <option selected>Maestría</option>
+                  <option>Doctorado</option>
+                  <option>Investigación</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="area" class="form-label">Área de estudio</label>
+                <select id="area" class="form-select">
+                  <option>Ingeniería</option>
+                  <option>Medicina</option>
+                  <option>Ciencias sociales</option>
+                  <option>Educación</option>
+                  <option selected>Tecnología</option>
+                  <option>Artes y humanidades</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="pais" class="form-label">País de destino</label>
+                <select id="pais" class="form-select">
+                  <option>República Dominicana</option>
+                  <option selected>España</option>
+                  <option>Estados Unidos</option>
+                  <option>Francia</option>
+                  <option>Alemania</option>
+                  <option>Canadá</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="idioma" class="form-label">Idioma</label>
+                <select id="idioma" class="form-select">
+                  <option selected>Español</option>
+                  <option>Inglés</option>
+                  <option>Francés</option>
+                  <option>Alemán</option>
+                  <option>Bilingüe</option>
+                </select>
+              </div>
+            </div>
+          </section>
+
+          <section class="form-card">
+            <h2 class="card-title">Fechas y duración</h2>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="fecha-apertura" class="form-label"
+                  >Fecha de apertura</label
+                >
+                <input
+                  type="date"
+                  id="fecha-apertura"
+                  class="form-input"
+                  value="2026-03-01"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="fecha-limite" class="form-label"
+                  >Fecha límite de postulación</label
+                >
+                <input
+                  type="date"
+                  id="fecha-limite"
+                  class="form-input"
+                  value="2026-04-30"
+                />
+              </div>
+
+              <div class="form-group full">
+                <label for="duracion" class="form-label"
+                  >Duración del programa</label
+                >
+                <input
+                  type="text"
+                  id="duracion"
+                  class="form-input"
+                  value="2 años"
+                />
+              </div>
+            </div>
+          </section>
+
+          <section class="form-card">
+            <h2 class="card-title">Requisitos y beneficios</h2>
+
+            <div class="form-grid">
+              <div class="form-group full">
+                <label for="requisitos" class="form-label">Requisitos</label>
+                <textarea id="requisitos" class="form-textarea">
+Ser dominicano
+Título universitario de grado
+Índice académico mínimo requerido
+Dominio del idioma del programa
+Carta de motivación</textarea
+                >
+                <span class="helper-text">Escribe un requisito por línea</span>
+              </div>
+
+              <div class="form-group full">
+                <label for="beneficios" class="form-label"
+                  >Beneficios que cubre</label
+                >
+                <textarea id="beneficios" class="form-textarea">
+Matrícula completa
+Apoyo para manutención
+Seguro médico
+Acompañamiento institucional</textarea
+                >
+                <span class="helper-text">Escribe un beneficio por línea</span>
+              </div>
+
+              <div class="form-group full">
+                <label for="documentos" class="form-label"
+                  >Documentos necesarios</label
+                >
+                <textarea id="documentos" class="form-textarea">
+Cédula o pasaporte
+Récord de notas
+Título universitario
+Carta de motivación
+Currículum vitae</textarea
+                >
+                <span class="helper-text">Escribe un documento por línea</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="form-card">
+            <h2 class="card-title">Enlace oficial</h2>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="url-oficial" class="form-label"
+                  >URL del sitio oficial</label
+                >
+                <input
+                  type="url"
+                  id="url-oficial"
+                  class="form-input"
+                  value="https://www.mescyt.gob.do/becas-internacionales"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="email-contacto" class="form-label"
+                  >Email de contacto</label
+                >
+                <input
+                  type="email"
+                  id="email-contacto"
+                  class="form-input"
+                  value="becasinternacionales@mescyt.gob.do"
+                />
+              </div>
+            </div>
+          </section>
+
+          <div class="form-actions">
+            <a href="dashboard.html" class="btn-secondary-custom">Cancelar</a>
+            <button type="submit" class="btn-primary-custom">
+              Guardar cambios
+            </button>
+          </div>
+        </form>
+      </main>
+    </div>
+  </body>
+</html>
